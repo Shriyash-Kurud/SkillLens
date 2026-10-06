@@ -1,9 +1,12 @@
+/* =========================================================
+   1. VARIABLES
+   ========================================================= */
 :root {
   --text: #ffffff;
   --muted: rgba(255, 255, 255, 0.8);
   --accent: #5aa0ff;
 
-  /* Liquid glass ingredients (very transparent) */
+  /* Liquid glass ingredients */
   --glass: rgba(255, 255, 255, 0.008);
   --glass-strong: rgba(255, 255, 255, 0.045);
   --glass-border: rgba(255, 255, 255, 0.12);
@@ -13,8 +16,14 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.4),
     inset 0 -1px 0 rgba(255, 255, 255, 0.03),
     inset 0 0 20px rgba(255, 255, 255, 0.03);
+
+  /* Navbar text centering: raise this if text still looks low, lower it if too high */
+  --nav-text-lift: 3px;
 }
 
+/* =========================================================
+   2. BASICS
+   ========================================================= */
 * { box-sizing: border-box; }
 
 body {
@@ -23,7 +32,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
-  /* Soft colour glows behind everything so the glass has something to blur */
   background-color: #07080c;
   background-image:
     radial-gradient(circle at 15% 10%, rgba(44, 53, 78, 0.45), transparent 40%),
@@ -45,7 +53,9 @@ p { color: var(--muted); margin: 0 0 16px; }
   clip: rect(0 0 0 0);
 }
 
-/* ---------- Glass surfaces (shared by navbar, cards, upload box, footer) ---------- */
+/* =========================================================
+   3. GLASS SURFACES
+   ========================================================= */
 .navbar, .card, .upload-box, .footer {
   background: var(--glass);
   border: 1px solid var(--glass-border);
@@ -54,12 +64,15 @@ p { color: var(--muted); margin: 0 0 16px; }
   backdrop-filter: var(--glass-blur);
 }
 
-/* ---------- Navbar (floating pill) ---------- */
+/* =========================================================
+   4. NAVBAR
+   ========================================================= */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 10px 10px 20px;
+  height: 64px;                       /* fixed height keeps everything centered */
+  padding: 0 12px 0 22px;
   border-radius: 999px;
   position: sticky;
   top: 12px;
@@ -69,18 +82,44 @@ p { color: var(--muted); margin: 0 0 16px; }
   margin: 12px auto 0;
 }
 
-.logo { font-size: 1.3rem; font-weight: 700; }
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  padding-bottom: var(--nav-text-lift);
+}
 .logo span { color: var(--accent); }
 
 .nav-links { display: flex; align-items: center; gap: 6px; }
+
+/* Every link AND the blue button share this exact box */
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 18px var(--nav-text-lift);   /* bottom padding lifts the text up */
+  line-height: 1;
   color: var(--muted);
-  padding: 8px 16px;
+  border: 1px solid transparent;
   border-radius: 999px;
   transition: background 0.2s, color 0.2s;
 }
-.nav-links a:hover { color: var(--text); background: var(--glass); }
+.nav-links a:hover { color: var(--text); background: var(--glass-strong); }
 .nav-links a.active { color: var(--text); background: var(--glass-strong); }
+
+/* Blue button inside the navbar */
+.nav-links a.button {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: linear-gradient(180deg, rgba(110, 170, 255, 0.85), rgba(60, 120, 240, 0.75));
+  box-shadow: 0 0 16px rgba(60, 120, 240, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: none;
+  filter: none;
+}
+.nav-links a.button:hover { filter: brightness(1.1); }
 
 .menu-button {
   display: none;
@@ -93,7 +132,9 @@ p { color: var(--muted); margin: 0 0 16px; }
   cursor: pointer;
 }
 
-/* ---------- Buttons ---------- */
+/* =========================================================
+   5. BUTTONS (page content)
+   ========================================================= */
 .button {
   display: inline-block;
   background: linear-gradient(180deg, rgba(110, 170, 255, 0.85), rgba(60, 120, 240, 0.75));
@@ -109,11 +150,7 @@ p { color: var(--muted); margin: 0 0 16px; }
 }
 .button:hover { filter: brightness(1.1); transform: translateY(-1px); }
 .button:active { transform: scale(0.97); }
-
-/* Primary button inside the navbar keeps its glass-blue look */
-.nav-links a.button { padding: 8px 20px; color: #fff; background: linear-gradient(180deg, rgba(110, 170, 255, 0.85), rgba(60, 120, 240, 0.75)); }
-.nav-links a.button:hover { background: linear-gradient(180deg, rgba(110, 170, 255, 0.85), rgba(60, 120, 240, 0.75)); }
-.button.active { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 4px 16px rgba(60, 120, 240, 0.35); }
+.button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
 
 .button.secondary {
   background: var(--glass);
@@ -122,11 +159,12 @@ p { color: var(--muted); margin: 0 0 16px; }
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
 }
-.button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
 
 .button-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-/* ---------- Layout ---------- */
+/* =========================================================
+   6. LAYOUT
+   ========================================================= */
 .section { padding: 48px 24px; max-width: 1000px; margin: 0 auto; }
 .narrow { max-width: 760px; }
 .subtitle { font-size: 1.1rem; margin-bottom: 32px; }
@@ -136,12 +174,11 @@ p { color: var(--muted); margin: 0 0 16px; }
   padding: 60px 24px 80px;
   max-width: 800px;
   margin: 0 auto;
-  margin-top: 60px;
 }
 .hero h1 { font-size: 3.4rem; }
 .hero p { font-size: 1.15rem; margin-bottom: 32px; }
 
-/* ---------- Home page: static, no scrolling (desktop and tablet) ---------- */
+/* Home page: static, no scrolling (desktop and tablet only) */
 @media (min-width: 701px) and (min-height: 600px) {
   body.home {
     height: 100vh;
@@ -155,35 +192,40 @@ p { color: var(--muted); margin: 0 0 16px; }
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 60px;   /* nudges content slightly above true centre */
+    padding-bottom: 60px;
   }
   body.home .hero { padding: 0 24px 40px; }
 }
 
-/* ---------- About page text ---------- */
+/* =========================================================
+   7. CARDS
+   ========================================================= */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.steps { display: grid; gap: 20px; }
+
+.card { border-radius: 25px; padding: 22px; }
+.card p { margin: 0; }
+.card h3 { color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
+.number { color: var(--accent); font-weight: 700; font-size: 0.9rem; }
+
+/* =========================================================
+   8. ABOUT PAGE
+   ========================================================= */
 .about h1 { font-size: 2.6rem; margin-bottom: 24px; }
 
 .about > p {
+  max-width: 760px;
   font-size: 1.15rem;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 20px;
 }
 
-.about h2 { font-size: 1.6rem; margin: 48px 0 20px; }
+.about h2 { font-size: 1.6rem; margin: 48px 0 40px; }
 
-.about .card h3 { font-size: 1.2rem; margin-bottom: 8px; }
-.about .card p { font-size: 1rem; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
-
-/* ---------- Cards ---------- */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.steps { display: grid; gap: 20px; }
-
-.card { border-radius: 25px; padding: 22px; }
-.card p { margin: 0; }
-.number { color: var(--accent); font-weight: 700; font-size: 0.9rem; }
-
-/* ---------- Upload ---------- */
+/* =========================================================
+   9. UPLOAD (Analyze page)
+   ========================================================= */
 .upload-box {
   border: 2px dashed rgba(255, 255, 255, 0.3);
   border-radius: 32px;
@@ -207,12 +249,13 @@ p { color: var(--muted); margin: 0 0 16px; }
 
 .analyze-button { margin-top: 16px; width: 100%; }
 
-/* ---------- Mobile ---------- */
+/* =========================================================
+   10. MOBILE
+   ========================================================= */
 @media (max-width: 700px) {
-  .navbar { padding: 8px 10px 8px 20px; }
+  .navbar { padding: 0 10px 0 20px; }
   .menu-button { display: block; }
 
-  /* Dropdown is a floating glass panel under the navbar */
   .nav-links {
     display: none;
     flex-direction: column;
@@ -221,7 +264,7 @@ p { color: var(--muted); margin: 0 0 16px; }
     position: absolute;
     top: calc(100% + 8px);
     left: 0; right: 0;
-    background: rgba(25, 28, 38, 0.85);   /* more opaque so text stays readable */
+    background: rgba(25, 28, 38, 0.85);
     border: 1px solid var(--glass-border);
     border-radius: 28px;
     box-shadow: var(--glass-shadow);
@@ -230,8 +273,7 @@ p { color: var(--muted); margin: 0 0 16px; }
     padding: 12px;
   }
   .nav-links.open { display: flex; }
-  .nav-links a { padding: 12px 16px; }
-  .nav-links .button { text-align: center; margin-top: 4px; }
+  .nav-links a { height: 46px; }
 
   .hero { padding: 64px 20px 48px; }
   .hero h1 { font-size: 2.2rem; }
