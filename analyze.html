@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analyze Resume | SkillLens</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="index.html">Skill<span>Lens</span></a>
+    <button class="menu-button" id="menu-button" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <nav id="nav-links" class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="about.html">About</a>
+      <a href="analyze.html" class="button active" aria-current="page">Analyze Resume</a>
+    </nav>
+  </header>
+
+  <main class="section narrow">
+    <h1>Analyze Your Resume</h1>
+    <p class="subtitle">Upload your resume in PDF format to get started.</p>
+
+    <label for="file-input" class="visually-hidden">Choose a resume PDF</label>
+    <input type="file" id="file-input" accept=".pdf,application/pdf" hidden>
+
+    <!-- State 1: nothing selected -->
+    <div class="upload-box" id="upload-box">
+      <h2>Upload Resume</h2>
+      <p>Drag &amp; drop your PDF here</p>
+      <p class="muted">or</p>
+      <button type="button" class="button" id="browse-button">Browse Files</button>
+      <p class="muted small">PDF • Maximum 10 MB</p>
+    </div>
+
+    <!-- State 2: file selected -->
+    <div class="upload-box selected" id="selected-box" hidden>
+      <div class="check">✓</div>
+      <p class="file-name" id="file-name"></p>
+      <p class="muted" id="file-info"></p>
+      <div class="button-row">
+        <button type="button" class="button secondary" id="replace-button">Replace</button>
+        <button type="button" class="button secondary" id="remove-button">Remove</button>
+      </div>
+    </div>
+
+    <p class="message error" id="error-message" role="alert"></p>
+    <p class="message success" id="success-message" role="status"></p>
+
+    <button type="button" class="button analyze-button" id="analyze-button" disabled>Analyze Resume</button>
+    <p class="muted small">Resume analysis will be available soon.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
