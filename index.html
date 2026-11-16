@@ -1,60 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SkillLens | AI-Based Resume Analysis System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body class="home">
-    <header class="navbar">
-        <a class="logo" href="index.html">Skill<span>Lens</span></a>
-        <button class="menu-button" id="menu-button" aria-label="Toggle menu" aria-expanded="false">☰</button>
-        <nav id="nav-links" class="nav-links">
-            <a href="index.html" class="active" aria-current="page">Home</a>
-            <a href="how-it-works.html">How It Works</a>
-            <a href="about.html">About</a>
-            <a href="analyze.html" class="button">Analyze Resume</a>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <h1>Your resume deserves a better look.</h1>
-            <p>SkillLens helps you understand the strengths and weaknesses of your resume and shows you where it can be
-                improved.</p>
-            <div class="button-row">
-                <a href="analyze.html" class="button">Analyze My Resume</a>
-                <a href="how-it-works.html" class="button secondary">How It Works</a>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="cards">
-                <div class="card">
-                    <span class="number"><h3>Analyze</h3></span>
-                    
-                    <p>Understand the content and structure of your resume.</p>
-                </div>
-                <div class="card">
-                    <span class="number"><h3>Evaluate</h3></span>
-                    
-                    <p>Identify strengths and areas that need improvement.</p>
-                </div>
-                <div class="card">
-                    <span class="number"><h3>Improve</h3></span>
-                    
-                    <p>Get actionable suggestions to make your resume stronger.</p>
-                </div>
-            </div>
-        </section>
-
-    
-    </main>
-
-    <script src="script.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e8e5d9" />
+    <meta name="description" content="A thoughtful, frontend demo for understanding and improving your resume." />
+    <title>SkillLens — Turn your resume into opportunities</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
