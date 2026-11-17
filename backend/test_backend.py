@@ -93,6 +93,13 @@ class ApiTests(unittest.TestCase):
     def with_ai(self, reply):
         return patch.multiple(ai_analyzer, _client=lambda: FakeClient(reply))
 
+    def test_api_allows_github_pages_origin(self):
+        response = self.client.get(
+            "/api/health",
+            headers={"Origin": "https://shriyash-kurud.github.io"},
+        )
+        self.assertEqual(response.headers.get("Access-Control-Allow-Origin"), "https://shriyash-kurud.github.io")
+
     # 1. Valid, complete resume
     def test_1_valid_resume(self):
         with self.with_ai(good_ai_reply()):

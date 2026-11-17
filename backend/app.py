@@ -1,6 +1,8 @@
 import logging
+import os
 
 from dotenv import load_dotenv
+from flask_cors import CORS
 from flask import Flask, jsonify, request
 from werkzeug.exceptions import HTTPException
 
@@ -22,6 +24,11 @@ DISCLAIMER = (
 )
 
 app = Flask(__name__)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": os.getenv("FRONTEND_ORIGIN", "https://shriyash-kurud.github.io"),
+    }
+})
 # Slightly above 10 MB so multipart overhead doesn't reject a file that is exactly at the limit;
 # the exact file-size check is done in analyze().
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES + 64 * 1024
