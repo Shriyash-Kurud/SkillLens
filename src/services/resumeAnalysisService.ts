@@ -17,6 +17,7 @@ type ApiResponse = {
 };
 
 const REQUEST_TIMEOUT_MS = 150_000;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "");
 
 function toAnalysisResult(data: ApiResponse, filename: string): AnalysisResult {
   return {
@@ -37,6 +38,10 @@ function toAnalysisResult(data: ApiResponse, filename: string): AnalysisResult {
 }
 
 export async function analyzeUploadedResume(file: File): Promise<AnalysisResult> {
+  if (import.meta.env.PROD && !API_BASE_URL) {
+    throw new Error("Resume analysis is not configured for this deployment. The backend must be deployed and VITE_API_BASE_URL set.");
+  }
+
   const body = new FormData();
   body.append("resume", file);
 
@@ -45,7 +50,7 @@ export async function analyzeUploadedResume(file: File): Promise<AnalysisResult>
 
   let response: Response;
   try {
-    response = await fetch("/api/analyze", { method: "POST", body, signal: controller.signal });
+    response = await fetch(`${API_BASE_URL ?? ""}/api/analyze`, { method: "POST", body, signal: controller.signal });
   } catch (reason) {
     if (reason instanceof DOMException && reason.name === "AbortError") {
       throw new Error("The analysis took too long. Please try again.");
