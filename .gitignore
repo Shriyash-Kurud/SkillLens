@@ -1,3 +1,12 @@
 node_modules/
 dist/
 *.tsbuildinfo
+
+# Backend secrets, virtualenv and temp files
+.env
+backend/.venv/
+backend/.venv-old/
+__pycache__/
+*.pyc
+*.tmp
+backend/tmp/

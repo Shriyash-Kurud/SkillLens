@@ -1,6 +1,4 @@
-import type { ResumeMetadata } from "./analysis";
-
-export const MAX_FILE_SIZE = 5 * 1024 * 1024;
+export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 export function validateResume(file: File): string | null {
   const hasPdfExtension = /\.pdf$/i.test(file.name);
@@ -10,16 +8,12 @@ export function validateResume(file: File): string | null {
     return "Please choose a PDF file. Other file types are not supported.";
   }
   if (file.size > MAX_FILE_SIZE) {
-    return "This file is larger than 5 MB. Choose a smaller PDF to continue.";
+    return "This file is larger than 10 MB. Choose a smaller PDF to continue.";
   }
   if (file.size === 0) {
     return "This file appears to be empty. Choose another PDF.";
   }
   return null;
-}
-
-export function getResumeMetadata(file: File): ResumeMetadata {
-  return { name: file.name, size: file.size, type: file.type || "application/pdf" };
 }
 
 export function formatFileSize(size: number): string {

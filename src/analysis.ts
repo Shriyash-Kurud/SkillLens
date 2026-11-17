@@ -1,27 +1,3 @@
-export type ResumeMetadata = {
-  name: string;
-  size: number;
-  type: string;
-};
-
-export type AnalysisRequest = {
-  resume: ResumeMetadata;
-  targetRole: string;
-};
-
-export type ResumeSection = {
-  id: string;
-  heading: string;
-  evidence: string;
-  confidence: number;
-};
-
-export type DetectedSkill = {
-  name: string;
-  category: string;
-  aliases: string[];
-};
-
 export type ScoreCategory = {
   label: string;
   score: number;
@@ -41,16 +17,16 @@ export type Recommendation = {
   priority: "High" | "Medium" | "Low";
 };
 
-export type KeywordComparison = {
-  keyword: string;
-  category: string;
-  detected: boolean;
-};
-
-export type DocumentReadabilityCheck = {
+export type MissingElement = {
   title: string;
   detail: string;
-  status: "Pass" | "Consider" | "Review";
+  importance: "Important" | "Optional";
+};
+
+export type SectionRewrite = {
+  section: string;
+  issue: string;
+  improvement: string;
 };
 
 export type FeedbackSection = {
@@ -59,43 +35,18 @@ export type FeedbackSection = {
   detail: string;
 };
 
-export type ExtractedResume = {
-  filename: string;
-  pageCount: number;
-  text: string;
-  normalizedText: string;
-  wordCount: number;
-  sections: ResumeSection[];
-  skills: DetectedSkill[];
-  contactInfoFound: boolean;
-  meaningfulContent: boolean;
-  hasAchievementSignals: boolean;
-};
-
-export type AnalysisFinding = {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  severity: "high" | "medium" | "low";
-  evidence: string;
-  nextStep: string;
-};
-
 export type AnalysisResult = {
   score: number;
   scoreLabel: string;
+  disclaimer: string;
   breakdown: ScoreCategory[];
   insights: Insight[];
   recommendations: Recommendation[];
-  keywords: KeywordComparison[];
-  ats: DocumentReadabilityCheck[];
+  missing: MissingElement[];
+  rewrites: SectionRewrite[];
   feedback: FeedbackSection[];
-  sections: ResumeSection[];
-  skills: DetectedSkill[];
   metadata: {
     filename: string;
     pageCount: number;
-    targetRole: string;
   };
 };
